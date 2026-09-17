@@ -51,5 +51,4 @@ jobs:
 
       - name: Publish GitHub Pages
         run: |
-          gh api --method PUT "repos/$GITHUB_REPOSITORY/pages" -f 'source[branch]=gh-pages' -f 'source[path]=/'
           gh api --method POST "repos/$GITHUB_REPOSITORY/pages/builds"
