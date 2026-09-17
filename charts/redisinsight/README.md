@@ -1,7 +1,8 @@
 # Redisinsight Helm chart
 
-Redis Insight for Redis.
 Based on [heywood8/redisinsight](https://github.com/heywood8/helm-charts/tree/main/charts/redisinsight)
+
+Redis Insight for Redis.
 
 ## Usage
 
