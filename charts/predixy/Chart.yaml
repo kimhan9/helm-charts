@@ -1,0 +1,13 @@
+apiVersion: v2
+name: predixy
+version: 0.1.0
+appVersion: "20240424"
+description: Helm chart for Predixy Redis Cluster proxy
+type: application
+keywords:
+  - redis
+  - redis-cluster
+  - predixy
+  - proxy
+sources:
+  - https://github.com/joyieldInc/predixy

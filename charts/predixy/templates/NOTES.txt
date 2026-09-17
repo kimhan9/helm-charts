@@ -1,0 +1,11 @@
+Predixy has been installed.
+
+Service DNS inside the cluster:
+  {{ include "predixy.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.service.port }}
+
+Test with redis-cli:
+  kubectl run redis-client --rm -it --restart=Never --image=redis:7 -- \
+    redis-cli -h {{ include "predixy.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local -p {{ .Values.service.port }} PING
+
+Check generated Predixy config:
+  kubectl get secret {{ include "predixy.fullname" . }}-config -n {{ .Release.Namespace }} -o yaml
