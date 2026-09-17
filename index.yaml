@@ -1,0 +1,17 @@
+apiVersion: v1
+entries:
+  redisinsight:
+  - apiVersion: v2
+    appVersion: 3.8.0
+    created: "2026-09-17T08:13:25.950852779Z"
+    description: A Redisinsight Helm chart for kubernetes
+    digest: 358144be1ede5354c319c18648fa46b1e7068df4fa5f91baf4d9f21a9e0fe475
+    icon: https://avatars.githubusercontent.com/u/87389211
+    name: redisinsight
+    sources:
+    - https://github.com/redis/redisinsight
+    type: application
+    urls:
+    - https://github.com/kimhan9/helm-charts/releases/download/redisinsight-0.1.0/redisinsight-0.1.0.tgz
+    version: 0.1.0
+generated: "2026-09-17T08:13:25.950860423Z"
