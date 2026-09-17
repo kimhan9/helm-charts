@@ -2,14 +2,22 @@ name: Release Charts
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: release-charts
+  cancel-in-progress: false
 
 jobs:
   release:
     permissions:
       contents: write
+      pages: write
     runs-on: ubuntu-latest
+    env:
+      CR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -18,10 +26,30 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config user.name "$GITHUB_ACTOR"
-          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - name: Run chart-releaser
+      - name: Install chart-releaser
         uses: helm/chart-releaser-action@v1.6.0
-        env:
-          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        with:
+          install_only: true
+
+      - name: Package charts and publish missing releases
+        run: |
+          mkdir -p .cr-release-packages .cr-index
+          for chart in charts/*; do
+            if [[ -f "$chart/Chart.yaml" ]]; then
+              cr package "$chart"
+            fi
+          done
+          cr upload --owner "${GITHUB_REPOSITORY%/*}" --git-repo "${GITHUB_REPOSITORY#*/}" --commit "$GITHUB_SHA" --skip-existing
+
+      - name: Rebuild chart index from releases
+        run: |
+          git fetch origin gh-pages
+          cr index --owner "${GITHUB_REPOSITORY%/*}" --git-repo "${GITHUB_REPOSITORY#*/}" --pages-branch gh-pages --push
+
+      - name: Publish GitHub Pages
+        run: |
+          gh api --method PUT "repos/$GITHUB_REPOSITORY/pages" -f 'source[branch]=gh-pages' -f 'source[path]=/'
+          gh api --method POST "repos/$GITHUB_REPOSITORY/pages/builds"
