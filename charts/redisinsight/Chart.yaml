@@ -1,0 +1,9 @@
+apiVersion: v2
+name: redisinsight
+version: 0.1.0
+appVersion: "3.8.0"
+description: A Redisinsight Helm chart for kubernetes
+type: application
+icon: https://avatars.githubusercontent.com/u/87389211
+sources:
+  - https://github.com/redis/redisinsight
