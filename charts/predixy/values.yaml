@@ -42,9 +42,7 @@ resources:
     cpu: 500m
     memory: 512Mi
 
-nodeSelector:
-  workload-type: general
-  
+nodeSelector: {}  
 tolerations: []
 affinity: {}
 
