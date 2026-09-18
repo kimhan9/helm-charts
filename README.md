@@ -1,6 +1,6 @@
 # kimhan9 helm-charts
 
-![Release Charts](https://github.com/kimhan9/helm-charts/workflows/Release%20Charts/badge.svg?branch=main) [![Releases downloads](https://img.shields.io/github/downloads/kimhan9/helm-charts/total.svg)](https://github.com/kimhan9/helm-charts/releases)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) ![Release Charts](https://github.com/kimhan9/helm-charts/workflows/Release%20Charts/badge.svg?branch=main) [![Releases downloads](https://img.shields.io/github/downloads/kimhan9/helm-charts/total.svg)](https://github.com/kimhan9/helm-charts/releases)
 
 The code is provided as-is with no warranties.
 
