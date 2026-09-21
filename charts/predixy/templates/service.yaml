@@ -4,16 +4,12 @@ metadata:
   name: {{ include "predixy.fullname" . }}
   labels:
     {{- include "predixy.labels" . | nindent 4 }}
-  {{- with .Values.service.annotations }}
-  annotations:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
 spec:
   type: {{ .Values.service.type }}
-  selector:
-    {{- include "predixy.selectorLabels" . | nindent 4 }}
   ports:
-    - name: redis
-      port: {{ .Values.service.port }}
+    - port: {{ .Values.service.port }}
       targetPort: redis
       protocol: TCP
+      name: redis
+  selector:
+    {{- include "predixy.selectorLabels" . | nindent 4 }}

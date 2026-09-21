@@ -1,0 +1,27 @@
+{{- if .Values.tcpRoute.enabled -}}
+{{- $fullName := include "predixy.fullname" . -}}
+apiVersion: gateway.networking.k8s.io/v1alpha2
+kind: TCPRoute
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- include "predixy.labels" . | nindent 4 }}
+  {{- with .Values.tcpRoute.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  parentRefs:
+    {{- with .Values.tcpRoute.parentRefs }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  rules:
+    - backendRefs:
+        {{- range .Values.tcpRoute.backendRefs }}
+        - name: {{ .name | default $fullName }}
+          port: {{ .port | default $.Values.service.port }}
+          {{- with .weight }}
+          weight: {{ . }}
+          {{- end }}
+        {{- end }}
+{{- end }}
