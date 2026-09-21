@@ -3,6 +3,23 @@ entries:
   predixy:
   - apiVersion: v2
     appVersion: "20240424"
+    created: "2026-09-21T12:50:10.584975899Z"
+    description: Helm chart for Predixy Redis Cluster proxy
+    digest: 8f45a99035a7840d1c8a8c896e5c19648b1c4d9afb9d9d60c6ed6398c42e2fbc
+    keywords:
+    - redis
+    - redis-cluster
+    - predixy
+    - proxy
+    name: predixy
+    sources:
+    - https://github.com/joyieldInc/predixy
+    type: application
+    urls:
+    - https://github.com/kimhan9/helm-charts/releases/download/predixy-0.1.2/predixy-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: "20240424"
     created: "2026-09-17T09:17:53.72657026Z"
     description: Helm chart for Predixy Redis Cluster proxy
     digest: 4a8788b9b1b1fbac8825de7473d12e0cccfba01e962a504f022dbbb1de14d1c4
@@ -49,4 +66,4 @@ entries:
     urls:
     - https://github.com/kimhan9/helm-charts/releases/download/redisinsight-0.1.0/redisinsight-0.1.0.tgz
     version: 0.1.0
-generated: "2026-09-17T09:17:53.865106145Z"
+generated: "2026-09-21T12:50:10.713995657Z"
