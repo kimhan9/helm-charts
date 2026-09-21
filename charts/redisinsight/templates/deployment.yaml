@@ -1,66 +1,75 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "redisinsight-chart.fullname" . }}
+  name: {{ include "redisinsight.fullname" . }}
   labels:
-    {{- include "redisinsight-chart.labels" . | nindent 4 }}
+    {{- include "redisinsight.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   strategy:
     type: {{ .Values.updateStrategy }}
   selector:
     matchLabels:
-      {{- include "redisinsight-chart.selectorLabels" . | nindent 6 }}
+      {{- include "redisinsight.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-    {{- with .Values.podAnnotations }}
+      {{- with .Values.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
-    {{- end }}
+      {{- end }}
       labels:
-        {{- include "redisinsight-chart.selectorLabels" . | nindent 8 }}
+        {{- include "redisinsight.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "redisinsight-chart.serviceAccountName" . }}
+      serviceAccountName: {{ include "redisinsight.serviceAccountName" . }}
+      {{- with .Values.podSecurityContext }}
       securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      volumes:
-        - name: redisinsight
-{{ if .Values.persistentVolumeClaim.create }}
-          persistentVolumeClaim:
-            claimName: {{ include "redisinsight-chart.fullname" . }}-data
-{{ else }}
-          emptyDir: {}
-{{ end }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
-        - env:
-            - name: RILOGLEVEL
+        - name: {{ .Chart.Name }}
+          env:
+            - name: RI_LOG_LEVEL
               value: DEBUG
-            - name: RITRUSTEDORIGINS
-              value: {{ .Values.trustedOrigins }}
-            - name: APP_FOLDER_ABSOLUTE_PATH
-              value: {{ .Values.volumeMount.mountPath }}
-          name: {{ .Chart.Name }}
+          {{- with .Values.securityContext }}
           securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+          {{- with .Values.livenessProbe }}
           livenessProbe:
-            {{- toYaml .Values.livenessProbe | nindent 12 }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.readinessProbe }}
           readinessProbe:
-            {{- toYaml .Values.readinessProbe | nindent 12 }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.resources }}
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           volumeMounts:
-            - name: redisinsight
-              mountPath: {{ .Values.volumeMount.mountPath }}
+            - name: data
+              mountPath: {{ .Values.persistence.mountPath }}
+      volumes:
+        - name: data
+          {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ include "redisinsight.fullname" . }}
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
