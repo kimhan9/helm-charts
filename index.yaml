@@ -55,6 +55,19 @@ entries:
   redisinsight:
   - apiVersion: v2
     appVersion: 3.8.0
+    created: "2026-09-22T05:28:34.809160819Z"
+    description: Helm chart for Redisinsight
+    digest: 6899638270038af8b4752ab2425cee4c335b0396a4c4c6f552020f352fd29f94
+    icon: https://avatars.githubusercontent.com/u/87389211
+    name: redisinsight
+    sources:
+    - https://github.com/redis/redisinsight
+    type: application
+    urls:
+    - https://github.com/kimhan9/helm-charts/releases/download/redisinsight-0.1.2/redisinsight-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 3.8.0
     created: "2026-09-21T12:50:55.488825115Z"
     description: Helm chart for Redisinsight
     digest: 2bb0c7a4d6afd54d867ca83368780ddfc2c9da4dc31da1409b033dbadabdf7cc
@@ -79,4 +92,4 @@ entries:
     urls:
     - https://github.com/kimhan9/helm-charts/releases/download/redisinsight-0.1.0/redisinsight-0.1.0.tgz
     version: 0.1.0
-generated: "2026-09-21T12:50:55.48883828Z"
+generated: "2026-09-22T05:28:34.809171606Z"
