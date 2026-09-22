@@ -2,7 +2,7 @@ apiVersion: v2
 name: redisinsight
 description: Helm chart for Redisinsight
 type: application
-version: 0.1.1
+version: 0.1.2
 appVersion: "3.8.0"
 icon: https://avatars.githubusercontent.com/u/87389211
 sources:
