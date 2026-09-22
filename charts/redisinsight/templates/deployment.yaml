@@ -34,9 +34,6 @@ spec:
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}
-          env:
-            - name: RI_LOG_LEVEL
-              value: DEBUG
           {{- with .Values.securityContext }}
           securityContext:
             {{- toYaml . | nindent 12 }}
